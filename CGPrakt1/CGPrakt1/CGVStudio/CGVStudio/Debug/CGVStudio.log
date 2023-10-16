@@ -1,0 +1,6 @@
+﻿  rgbimage.cpp
+C:\Users\Spuki\Documents\studium\Computergrafik\CGPrakt1\CGPrakt1\src\rgbimage.cpp(42,7): warning C4244: '=': conversion from 'float' to 'char', possible loss of data
+C:\Users\Spuki\Documents\studium\Computergrafik\CGPrakt1\CGPrakt1\src\rgbimage.cpp(46,7): warning C4244: '=': conversion from 'float' to 'char', possible loss of data
+C:\Users\Spuki\Documents\studium\Computergrafik\CGPrakt1\CGPrakt1\src\rgbimage.cpp(49,8): warning C4244: '=': conversion from 'float' to 'char', possible loss of data
+C:\Users\Spuki\Documents\studium\Computergrafik\CGPrakt1\CGPrakt1\src\rgbimage.cpp(96,20): warning C4018: '<': signed/unsigned mismatch
+  CGVStudio.vcxproj -> C:\Users\Spuki\Documents\studium\Computergrafik\CGPrakt1\CGPrakt1\CGVStudio\Debug\CGVStudio.exe
