@@ -65,32 +65,33 @@ bool RGBImage::saveToDisk( const char* Filename)
 	for (int i = 0; i < sizeof(bmpheader); i++) {
 		bmpheader[i] = 0;
 	}
+        //'B''M' -> es handelt sich um eine Bitmap
 	bmpheader[0] = 'B';
 	bmpheader[1] = 'M';
-	//bfSize
+	//Größe der Ganzen Datei -> Header(54) + Bildgröße
 	bmpheader[2] = (unsigned char)(fileSize);
 	bmpheader[3] = (unsigned char)(fileSize >> 8);
 	bmpheader[4] = (unsigned char)(fileSize >> 16);
 	bmpheader[5] = (unsigned char)(fileSize >> 24);
-	//bfOffBits / Infoheader + fileheader = size
+	//bfOffBits / Infoheader + fileheader = size -> Startadresse wo die Bilddaten anfangen
 	bmpheader[10] = 54;
-	//Infoheader
+	//Größe des InfoHeaders im "DIB" Format
 	bmpheader[14] = 40;
-	//Breite der BMP
+	//Breite der BMP als 32-Bit Little Endian(die niedrigwertigsten Bytes werden zuerst gespeichert.)
 	bmpheader[18] = (unsigned char)(this->m_Width);
 	bmpheader[19] = (unsigned char)(this->m_Width >> 8);
 	bmpheader[20] = (unsigned char)(this->m_Width >> 16);
 	bmpheader[21] = (unsigned char)(this->m_Width >> 24);
-	//H�he der BMP
+	//Höhe der BMP als 32-Bit Little Endian
 	bmpheader[22] = (unsigned char)(this->m_Height * -1);
 	bmpheader[23] = (unsigned char)(this->m_Height * -1 >> 8);
 	bmpheader[24] = (unsigned char)(this->m_Height * -1 >> 16);
 	bmpheader[25] = (unsigned char)(this->m_Height * -1 >> 24);
-	//anzahl an farbe planes
+	//Anzahl an Farbebenen
 	bmpheader[26] = 1;
-	//Color bit depth - 1,4,8,16,24,32
+	//Farbtiefe -> 1,4,8,16,24,32
 	bmpheader[28] = 24;
-	//Size Image
+	//Größe des Bildes als 32-Bit Little Endian Zahl
 	bmpheader[34] = (unsigned char)(imgSize);
 	bmpheader[35] = (unsigned char)(imgSize >> 8);
 	bmpheader[36] = (unsigned char)(imgSize >> 16);
