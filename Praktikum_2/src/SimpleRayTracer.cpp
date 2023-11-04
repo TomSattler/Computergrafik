@@ -41,24 +41,58 @@ Vector Camera::Position() const
 
 SimpleRayTracer::SimpleRayTracer(unsigned int MaxDepth)
 {
-	// TODO: Add your code
+	this->maxDepth = MaxDepth;
 }
 
 
 void SimpleRayTracer::traceScene( const Scene& SceneModel, RGBImage& Image)
 {
-	// TODO: Add your code
+	//Image.height/width = h/w
+	Camera camera = Camera(-8, 1, 1, 0.75, 640, 480);
+	for (int y = 0; y < Image.height(); y++) {
+		for (int x = 0; x < Image.width(); x++) {
+			Image.setPixelColor(x, y, Color());
+			Vector s = camera.generateRay(x, y);
+			Image.setPixelColor(x, y, trace(SceneModel, camera.Position(), s, this->maxDepth));
+		}
+	}
 }
 
 Color SimpleRayTracer::localIllumination( const Vector& Surface, const Vector& Eye, const Vector& N, const PointLight& Light, const Material& Mtrl )
 {
-	// TODO: Add your code
-	return Color(); // dummy (remove)
+	return Mtrl.getDiffuseCoeff(Surface);
 }
 
 Color SimpleRayTracer::trace( const Scene& SceneModel, const Vector& o, const Vector& d, int depth)
 {
-	// TODO: Add your code
-	return Color(); // dummy (remove)
+	float hittingPoint = 0;
+	float temp = 0;
+	int indexRectangle = 0;
+	Color c = Color();
+	//Berechnung des Auftrittpunkts P auf dem Dreieck. -> normalvektor des Kamerapixels(generate ray) * hitting Point
+	for (int i = 0; i < SceneModel.getTriangleCount(); i++) {
+		if (d.triangleIntersection(o, SceneModel.getTriangle(i).A, SceneModel.getTriangle(i).B, SceneModel.getTriangle(i).C, hittingPoint)) {
+			temp = d.triangleIntersection(o, SceneModel.getTriangle(i).A, SceneModel.getTriangle(i).B, SceneModel.getTriangle(i).C, hittingPoint;
+			if (temp < hittingPoint) {
+				hittingPoint = temp;
+				indexRectangle = i;
+			}
+		}
+	}
+	if (hittingPoint != 0) {
+		d* hittingPoint;
+		for (int i = 0; i < SceneModel.getLightCount(); i++) {
+			for (int j = 0; j < SceneModel.getTriangleCount(); j++) {
+				if (SceneModel.getLight(i).Position.triangleIntersection(d, SceneModel.getTriangle(j).A, SceneModel.getTriangle(j).B, SceneModel.getTriangle(j).C, hittingPoint)) {
+					return c;
+				}
+			}
+		}
+		return Color(SceneModel.getTriangle(indexRectangle).pMtrl., SceneModel.getTriangle(indexRectangle).pMtrl->GreenMtrl, SceneModel.getTriangle(indexRectangle).pMtrl->BlueMtrl);
+	}
+	else {
+		return c;
+	}
 }
+
 
